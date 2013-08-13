@@ -2,7 +2,8 @@
 $(function(){
 
   FORMY.forms = new FormCollection();
-
+  // initialize Hoodie
+  var hoodie  = new Hoodie("http://192.168.1.60:6004/_api")
 
 FORMY.loadForm = function(name, parentId, options) {
 	options || (options = {});
@@ -160,29 +161,30 @@ var AppRouter = Backbone.Router.extend({
     searchResults.db["view"] = [viewQuery];
 
 
-    // initialize Hoodie
-    //var hoodie  = new Hoodie("http://192.168.1.60:6002/_api")
 
-    //initial load of all incident items from the store
-    Backbone.hoodie.store.findAll('incident').then( function(searchResults) {
-      //searchResults.sort( sortByCreatedAt );
-      var listLength = searchResults.length;
-      console.log("item count: " + listLength);
-      if (listLength < limit) {
-        limit = listLength;
-        startkey = null;
-      }
-      FORMY.Incidents = new IncidentsList(searchResults);
-      startkey = 16;
-      var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
-      (new HomeView(
-          {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey})).render();
-      //console.log("starting stripeme.");
-      $(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
-      $(".stripeMe tr:even").addClass("alt");
-      $("#noStripeMe").removeClass("alt");
-      $("#noStripeMe").addClass("noStripeMeHeader");
-    });
+
+//    //initial load of all incident items from the store
+//    Backbone.hoodie.store.findAll('incident').then( function(searchResults) {
+//      //searchResults.sort( sortByCreatedAt );
+//      var listLength = searchResults.length;
+//      console.log("item count: " + listLength);
+//      if (listLength < limit) {
+//        limit = listLength;
+//        startkey = null;
+//      }
+//      FORMY.Incidents = new IncidentsList(searchResults);
+//      startkey = 16;
+//      var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
+//      (new HomeView(
+//          {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey})).render();
+//      //console.log("starting stripeme.");
+//      $(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
+//      $(".stripeMe tr:even").addClass("alt");
+//      $("#noStripeMe").removeClass("alt");
+//      $("#noStripeMe").addClass("noStripeMeHeader");
+//    });
+
+
 
 //    FORMY.Incidents = new IncidentsList(searchResults);
 //    startkey = 16;
@@ -232,6 +234,66 @@ var AppRouter = Backbone.Router.extend({
 //        console.log("Error loading PatientRecordList: " + JSON.stringify(arguments));
 //      }
 //    });
+    console.log("hoodie.account.username: "  + hoodie.account.username) ;
+    if(typeof hoodie.account.username === 'undefined'){
+      console.log("not logged in.")
+      alert("Click on the yellow row and sign in.")
+      FORMY.Incidents = searchResults;
+      var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
+      (new HomeView(
+          {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey})).render();
+    } else {
+      searchResults.fetch({fetch: 'query',
+        options: {
+          query: {
+            fun: {
+              map: function(doc) {
+                //emit(doc.order, null);
+                if (doc.formId === "incident") {
+                  emit([doc.lastModified], doc);
+                }
+              }
+            }
+          }
+        },
+        success : function(){
+          console.log("item count: " + searchResults.length);
+          var listLength = searchResults.length;
+          //var querySize = 15
+          if (listLength < limit) {
+            limit = listLength;
+            startkey = null;
+          } else {
+            var next_start_record = searchResults.at(limit-1);
+            if (next_start_record) {
+              startkey_docid = next_start_record.id;
+              console.log("next_start_record: " + JSON.stringify(next_start_record));
+              console.log("startkey_docid: " + startkey_docid);
+              startkey = next_start_record.get("lastModified");
+              FORMY.Incidents = searchResults.remove(next_start_record);
+            }
+          }
+          if (startkey == "" || startkey == null) {	//home (/)
+            FORMY.Incidents = searchResults;
+            startkey = 16;
+            //console.log("searchResults: " + JSON.stringify(searchResults));
+          }
+          console.log("startkey: " + startkey);
+          var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
+          (new HomeView(
+              {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey}));
+              //.render();
+//          console.log("starting stripeme.");
+//          $(".stripeMe tr").mouseover(function(){$(this).addClass("over");}).mouseout(function(){$(this).removeClass("over");});
+//          $(".stripeMe tr:even").addClass("alt");
+//          $("#noStripeMe").removeClass("alt");
+//          $("#noStripeMe").addClass("noStripeMeHeader");
+        },
+        error : function(){
+          console.log("Error loading PatientRecordList: " + JSON.stringify(arguments));
+        }
+      });
+    }
   },
 
   config: function () {
@@ -631,5 +693,51 @@ FORMY.router = new AppRouter();
 Backbone.history.start();
   console.log("started Backbone history")
 FORMY.Incidents = new IncidentsList();
+
+  // setup Hoodie shares
+  var hostname = window.location.host;
+  //if (hostname === "192.168.1.60:6004") {
+    // console.log("Setting up share on server: " + hostname)
+    var share;
+    //share = new Hoodie.Share(this.hoodie);
+  // user%2F1013313 is the kay database name.
+//    share = hoodie.share('user%2F1013313');
+//    share.subscribe();
+  // open a share and load all its objects
+//    hoodie.share('user/qaikby4').findAll("incident").done(function (objects) {
+//      var i=0;
+//      var cnt = objects.length;
+//      while (i < (cnt+1)) {
+//        i++;
+//        console.log("JSON: " + JSON.stringify(this));
+//      }
+//    });
+
+  //hoodie.share('user/qaikby4').grantWriteAccess(["1013313","2122682"]);
+  //hoodie.share('user/qaikby4').subscribe();
+
+  // add a new share and add some of my objects to it in one step
+//
+//  hoodie.store.findAll('incident').share()
+//      .done(function (incidents, share) { console.log('shared at ' + share.id); } );
+
+
+  //hoodie.share.add().done(function (share) {console.log('shared at ' + share.id)});
+  //hoodie.store.findAll('incident').shareAt('t47aqmv');
+
+  console.log("hoodie.account.username: "  + hoodie.account.username) ;
+  if (hoodie.account.username === "andro") {
+    //hoodie.share('tex5a7i').subscribe();
+    // open a share and load all its objects
+//    hoodie.share('tex5a7i').findAll()
+//        .done(function (objects) {console.log("The tex5a7i share contents: " + JSON.stringify(objects))});
+  }
+
+  //hoodie.share('user/tex5a7i').grantReadAccess('z36wk2v');
+
+  //hoodie.share('tex5a7i').grantWriteAccess('z36wk2v');
+
+
+
 
 });
