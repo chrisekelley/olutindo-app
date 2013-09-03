@@ -3,13 +3,16 @@ var FORMY = {};
 
 // "http://192.168.1.60:6004/_api"
 //var couchServer = "http://192.168.1.60:6004/_api";
-var remoteCouch = "http://192.168.1.60:6006/user%2Ffhefv4d/";
+//var remoteCouch = "https//0.0.0.0:6006/user%2Ffhefv4d/";
+//var remoteCouch = "http://admin:luvcouch@192.168.1.60:6006/troubletickets/";
+//var remoteCouch = "https://olutindo:r5QrILP)qNCz@olutindo.iriscouch.com/troubletickets/";
+var remoteCouch = "https://testuser:testuserPassword@olutindo.iriscouch.com/troubletickets/";
 console.log("Current remote is at: " + remoteCouch)
 //Backbone.connect("http://192.168.1.60:6004/_api") // creates a new hoodie at Backbone.hoodie
 Backbone.sync = BackbonePouch.sync({
   db: PouchDB('user%2Ffhefv4d')
 });
-//Backbone.Model.prototype.idAttribute = '_id';
+Backbone.Model.prototype.idAttribute = '_id';
 
 var onComplete = function(err, result) {
   if (result.ok) {
@@ -20,11 +23,8 @@ var onComplete = function(err, result) {
 }
 
 //var opts = {continuous: true, complete: onComplete};
-var opts = {continuous: true};
+//var opts = {continuous: true};
 
-
-Backbone.sync.defaults.db.replicate.to(remoteCouch, opts);
-Backbone.sync.defaults.db.replicate.from(remoteCouch, opts);
 
 //var url = model.get('url'),
 //    pushResps = this.pushResps,

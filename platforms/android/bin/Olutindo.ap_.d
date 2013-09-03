@@ -26,7 +26,6 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/config.xml \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/cordova.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/cordova_plugins.js \
-/Users/chrisk/source/olutindo-app/platforms/android/assets/www/cordova_plugins.json \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/css \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/images \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/index-bak.html \
@@ -34,12 +33,15 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/indexTodos.html \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/main.html \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/todos \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/version.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/app.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/coconut-utils.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/config.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/form_defs \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/models \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/query \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/templates \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/views \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/form_defs/incident.js \
@@ -59,6 +61,7 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/models/Report.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/models/ReportCollection.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/models/Syncpoint.js \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/query/pouchdb_views.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/templates/config.template.html \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/templates/form.template.html \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/templates/form.vert.template.html \
@@ -143,6 +146,7 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/images/system-software-update.png \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/images/system-users.png \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/images/user-home.png \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/backbone-couchdb-1.0.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/backbone-couchdb.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/backbone-hoodie.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/backbone-old-delete.js \
@@ -160,12 +164,16 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/jquery.couch.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/jquery.dateFormat-1.0.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/jquery.toObject.js \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/phonegap-loader.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/pouchdb-nightly.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/pouchdb-nightly.min.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/recordElementRender.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/underscore-min.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/underscore-old-delete.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/underscore.js \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.version \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.version/www \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.version/www/version.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/todos/backbone.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/todos/backbone.localStorage.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/todos/destroy.png \

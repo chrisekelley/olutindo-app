@@ -24,6 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider android:authorities="jsHybugger.org" android:exported="false" android:name="org.jshybugger.DebugContentProvider" />
+        <service android:enabled="true" android:exported="false" android:name="org.jshybugger.DebugService" />
     </application>
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="17" />
 </manifest>

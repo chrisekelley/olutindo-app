@@ -21,6 +21,7 @@ package org.rti.olutindo_app;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
+import org.jshybugger.DebugServiceClient;
 
 public class Olutindo extends DroidGap
 {
@@ -31,6 +32,19 @@ public class Olutindo extends DroidGap
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());
         //super.loadUrl("file:///android_asset/www/index.html")
+
+        // load html page via jsHybugger content provider
+        //super.loadUrl("content://jsHybugger.org/" + Config.getStartUrl());
     }
+
+    @Override
+    	public void init(CordovaWebView webView,
+    			CordovaWebViewClient webViewClient,
+    			CordovaChromeClient webChromeClient) {
+    		super.init(webView, webViewClient, webChromeClient);
+
+    		// attach web view to debugging service
+    		//DebugServiceClient.attachWebView(webView, this);
+    	}
 }
 

@@ -25,7 +25,16 @@
       <script src="assets/vendor/hoodie.js"></script>
       <script src="assets/vendor/hoodie.accountbar.bootstrap.js"></script>
       <script src="assets/vendor/bootstrap.modalform.js"></script>
-
+      <!--<script type="text/javascript">-->
+          <!--console.log("navigator.userAgent:" + navigator.userAgent)-->
+          <!--if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {-->
+              <!--var fileref=document.createElement('script')-->
+              <!--fileref.setAttribute("type","text/javascript")-->
+              <!--fileref.setAttribute("src", "cordova.js")-->
+              <!--console.log("Added cordova.js.")-->
+          <!--}-->
+      <!--</script>-->
+      <script src="js-libraries/phonegap-loader.js"></script>
   <!-- TODO for deployment - combine & minify all of this -->
   <!--<script type="text/javascript" src="js-libraries/jquery-1.7.2.min.js"></script>-->
   <!--<script type="text/javascript" src="js-libraries/jquery-ui-1.8.15.custom.min.js"></script>-->
@@ -52,6 +61,7 @@
           src="js-libraries/jquery.dateFormat-1.0.js"></script>
 
   <!-- The app itself - note that if new models/views are added they need to be added here-->
+  <script type="text/javascript" src="app/query/pouchdb_views.js"></script>
   <script type="text/javascript" src="app/coconut-utils.js"></script>
   <script type="text/javascript" src="app/config.js"></script>
   <script type="text/javascript" src="app/models/FormElement.js"></script>

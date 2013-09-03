@@ -1,3 +1,9 @@
+# view AndroidManifest.xml #generated:27
+-keep class org.jshybugger.DebugContentProvider { <init>(...); }
+
+# view AndroidManifest.xml #generated:28
+-keep class org.jshybugger.DebugService { <init>(...); }
+
 # view AndroidManifest.xml #generated:21
 -keep class org.rti.olutindo_app.Olutindo { <init>(...); }
 
