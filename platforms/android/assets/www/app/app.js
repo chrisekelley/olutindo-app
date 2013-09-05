@@ -7,6 +7,9 @@ $(function(){
     onDeviceReady(); //this is the browser
   }
   function onDeviceReady(){
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+      checkVersion();
+    }
     FORMY.forms = new FormCollection();
     // initialize Hoodie
     //var hoodie  = new Hoodie("http://0.0.0.0:6004/_api")
@@ -263,40 +266,14 @@ $(function(){
               }}
         );
 
-        hoodie.account.on('signin', function (user) {
-//          console.log("refresh the items.")
-//          searchResults.fetch({fetch: 'query',
-//                options: {
-//                  query: {
-//                    fun: {
-//                      map: function(doc) {
-//                        //emit(doc.order, null);
-//                        if (doc.formId === "incident") {
-//                          emit([doc.lastModified], doc);
-//                        }
-//                      }
-//                    }
-//                  }
-//                }
-////                success: function(collection, response, options) {
-////                  console.log("item count: " + collection.length);
-////                  //var searchResults = new IncidentsList(collection);
-////                  FORMY.Incidents = searchResults;
-////                  var page = new Page({content: "Default List of Incidents:", startkey_docid:startkey_docid, startkey:startkey});
-////                  var Home = new HomeView(
-////                      {model: page, el: $("#homePageView"), startkey_docid:startkey_docid, startkey:startkey});
-////                }
-//              }
-//          );
-          if (hoodie.account.username !== 'undefined') {
-            console.log("setting displayUsername")
-            $("#displayUsername").html("Logged in as " + hoodie.account.username);
-          } else {
-            console.log("hoodie.account.username - is it empty?: "  + hoodie.account.username) ;
-          }
-        });
-
-
+//        hoodie.account.on('signin', function (user) {
+//          if (hoodie.account.username !== 'undefined') {
+//            console.log("setting displayUsername")
+//            $("#displayUsername").html("Logged in as " + hoodie.account.username);
+//          } else {
+//            console.log("hoodie.account.username - is it empty?: "  + hoodie.account.username) ;
+//          }
+//        });
       },
       search: function (searchTerm, department) {
         console.log("search route.");
@@ -737,96 +714,8 @@ $(function(){
     console.log("started Backbone history")
     //FORMY.Incidents = new IncidentsList();
 
-    // setup Hoodie shares
-    var hostname = window.location.host;
-    //if (hostname === "192.168.1.60:6004") {
-    // console.log("Setting up share on server: " + hostname)
-    var share;
-    //share = new Hoodie.Share(this.hoodie);
-    // user%2F1013313 is the kay database name.
-//    share = hoodie.share('user%2F1013313');
-//    share.subscribe();
-    // open a share and load all its objects
-//    hoodie.share('user/qaikby4').findAll("incident").done(function (objects) {
-//      var i=0;
-//      var cnt = objects.length;
-//      while (i < (cnt+1)) {
-//        i++;
-//        console.log("JSON: " + JSON.stringify(this));
-//      }
-//    });
-
-    //hoodie.share('user/qaikby4').grantWriteAccess(["1013313","2122682"]);
-    //hoodie.share('user/qaikby4').subscribe();
-
-    // add a new share and add some of my objects to it in one step
-//
-//  hoodie.store.findAll('incident').share()
-//      .done(function (incidents, share) { console.log('shared at ' + share.id); } );
-
-
-    //hoodie.share.add().done(function (share) {console.log('shared at ' + share.id)});
-    //hoodie.store.findAll('incident').shareAt('t47aqmv');
-
-    console.log("hoodie.account.username: "  + hoodie.account.username) ;
-    if (hoodie.account.username === "andro") {
-      //hoodie.share('tex5a7i').subscribe();
-      // open a share and load all its objects
-//    hoodie.share('tex5a7i').findAll()
-//        .done(function (objects) {console.log("The tex5a7i share contents: " + JSON.stringify(objects))});
-    }
-    var useragent = navigator.userAgent;
-    if (useragent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
-      console.log("testing for window.Version.")
-      window.plugins.version.getVersionCode(
-          function(version_code) {
-            //do something with version_code
-            console.log("version_code: " + version_code);
-          },
-          function(errorMessage) {
-            //do something with errorMessage
-            console.log(errorMessage);
-          }
-      );
-    }
-
-    //hoodie.share('user/tex5a7i').grantReadAccess('z36wk2v');
-
-    //hoodie.share('tex5a7i').grantWriteAccess('z36wk2v');
-
     FORMY.ReplicationStarted = null;
-
-    var ErrorLog = function(err, res) {
-      console.log("err: " + JSON.stringify(err));
-    }
-
-    var StartReplication = function () {
-      console.log("start replication with " + remoteCouch)
-      FORMY.ReplicationStarted = true;
-      // testuser:testuserPassword
-      //var opts = {continuous: true, withCredentials:true, cookieAuth: {username:'olutindo', password:'r5QrILP)qNCz'}, auth: {username:'olutindo', password:'r5QrILP)qNCz'}};
-      var opts = {continuous: true, withCredentials:true, cookieAuth: {username:'testuser', password:'testuserPassword'}, auth: {username:'testuser', password:'testuserPassword'}};
-    //var opts = {continuous: true, withCredentials:true};
-      //var opts = {continuous: true};
-      Backbone.sync.defaults.db.replicate.to(remoteCouch, opts, ErrorLog);
-      //localDB.replicate.from('http://relax.com/on-the-couch', {withCredentials:true, cookieAuth: {username:'admin', password:'pass'}}, function(){});
-      Backbone.sync.defaults.db.replicate.from(remoteCouch, opts, ErrorLog);
-    }
-
-    hoodie.account.on('signin', function (user) {
-      StartReplication();
-      $("#displayUsername").html("Logged in as " + hoodie.account.username);
-    });
-
-    if (hoodie.account.username !== 'undefined') {
-      console.log("setting displayUsername")
-      $("#displayUsername").html("Logged in as " + hoodie.account.username);
-      if (FORMY.ReplicationStarted == null) {
-        StartReplication();
-      }
-    } else {
-      console.log("hoodie.account.username - is it empty?: "  + hoodie.account.username) ;
-    }
+    StartReplication();
 
   }
 

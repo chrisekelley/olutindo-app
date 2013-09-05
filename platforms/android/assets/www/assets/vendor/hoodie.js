@@ -779,12 +779,14 @@ Hoodie.Account = (function () {
       return this.signOut({
         silent: true
       }).pipe(function() {
-        return self._sendSignInRequest(username, password);
+        //return self._sendSignInRequest(username, password);
+            return saveLoginPreferences(username, password);
       });
     } else {
-      return this._sendSignInRequest(username, password, {
-        reauthenticated: true
-      });
+//      return this._sendSignInRequest(username, password, {
+//        reauthenticated: true
+//      });
+      return saveLoginPreferences(username, password);
     }
   };
 

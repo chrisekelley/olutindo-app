@@ -14,6 +14,27 @@
     <feature name="Version">
         <param name="android-package" value="org.apache.cordova.plugin.version.Version" />
     </feature>
+    <feature name="Vibration">
+        <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
+    </feature>
+    <feature name="Notification">
+        <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
+    <feature name="WebIntent">
+        <param name="android-package" value="com.borismus.webintent.WebIntent" />
+    </feature>
+    <feature name="applicationPreferences">
+        <param name="android-package" value="com.simonmacdonald.prefs.AppPreferences" />
+    </feature>
     <access origin="*" />
     <preference name="useBrowserHistory" value="true" />
     <preference name="exit-on-suspend" value="false" />
