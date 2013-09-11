@@ -81,11 +81,13 @@ function checkVersion() {
               console.log("Installed version: " + version_code);
               if(version_code != vcode){
                 console.log("Upgrade app!");
+                navigator.notification.beep(3);
+                navigator.notification.vibrate(2000);
                 navigator.notification.confirm(
                     'A new version is out! Get it now!',  // message
                     onVersion,            // callback to invoke with index of button pressed
                     'Update available',                 // title
-                    'Update now!, Maybe later'     // buttonLabels
+                    ['Update now!', 'Maybe later']     // buttonLabels
                 );
               }
             },
@@ -111,7 +113,7 @@ function downloadFile(){
   var fileSystem;
   console.log("downloading file.")
 
-  window.requestFileSystem(LocalFileSystem.TEMPORARY, 0,
+  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
       function(fs) {
         fileSystem = fs;
         var ft = new FileTransfer();
@@ -131,7 +133,6 @@ function downloadFile(){
               console.log("download complete: " + theFile.toURL());
               window.plugins.webintent.startActivity({
                     action: window.plugins.webintent.ACTION_VIEW,
-                    //url: 'file://' + theFile.fullPath,
                     url: 'file://' + theFile.fullPath,
                     type: 'application/vnd.android.package-archive'
                   },
@@ -152,13 +153,17 @@ function downloadFile(){
       });
 }
 
-function saveLoginPreferences(username, password) {
+function saveLoginPreferences(username, password, site) {
   if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
     window.applicationPreferences.set("username", username, function() {
     }, function(error) {
       console.log("Error! " + JSON.stringify(error));
     });
     window.applicationPreferences.set("password", password, function() {
+    }, function(error) {
+      console.log("Error! " + JSON.stringify(error));
+    });
+    window.applicationPreferences.set("site", site, function() {
     }, function(error) {
       console.log("Error! " + JSON.stringify(error));
     });
@@ -184,9 +189,16 @@ function getLoginPreferences() {
       //alert("Error! " + JSON.stringify(error));
       //console.log("Error! " + JSON.stringify(error));
     });
+    window.applicationPreferences.get("site", function(value) {
+      account.site = value;
+    }, function(error) {
+      //alert("Error! " + JSON.stringify(error));
+      //console.log("Error! " + JSON.stringify(error));
+    });
   } else {
     account.username = "testuser";
     account.password = "testuserPassword";
+    account.site = "gul";
   }
   return account;
 }
@@ -196,7 +208,10 @@ var StartReplication = function () {
   if (account.username != null) {
     var credentials = account.username + ":" + account.password;
     //var remoteCouch = "https://testuser:testuserPassword@olutindo.iriscouch.com/troubletickets/";
-    var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/troubletickets/";
+    //var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/troubletickets/";
+    var couchdb =  "troubletickets_" +  account.site;
+    //var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/" + couchdb + "/";
+    var remoteCouch = "http://" + credentials + "@192.168.2.1:5984/" + couchdb + "/";
     console.log("start replication with " + remoteCouch)
     FORMY.ReplicationStarted = true;
     var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};

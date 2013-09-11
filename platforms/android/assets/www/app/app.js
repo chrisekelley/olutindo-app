@@ -130,7 +130,7 @@ $(function(){
         "arrestDocket/:query":  						"arrestDocket",    	// #arrestDocket
         "problem/:query":       						"problem",    		// #arrestDocket
         "incidentRecords/incident/:incidentId":					"incidentRecords",  // #incidentRecords
-        "edit/:recordId":          						"edit",    			// #edit
+        "edit/incident/:recordId":          						"edit",    			// #edit
         "record/:recordId":        						"record",    		// #record
         "renderForm/:formId/:parentId":					"renderForm",    	// #renderForm
         "destroy/:recordId": 							"destroy",    		// #destroy
@@ -237,12 +237,11 @@ $(function(){
         var searchResults = new IncidentsList();
         var limit = 16;
         searchResults.db["keys"] = null;
-        var viewQuery = "byIncidentSorted?descending=true&limit=" + limit + "&startkey=" + "[" + this.startkey + "]" + "&startkey_docid=" + this.startkey_docid;
-        if (this.startkey == null || this.startkey == "" || this.startkey == "home") {
-          viewQuery = "byIncidentSorted?descending=true&limit=" + limit;
-        }
-        console.log("viewQuery: " + viewQuery);
-        searchResults.db["view"] = [viewQuery];
+//        var viewQuery = "byIncidentSorted?descending=true&limit=" + limit + "&startkey=" + "[" + this.startkey + "]" + "&startkey_docid=" + this.startkey_docid;
+//        if (this.startkey == null || this.startkey == "" || this.startkey == "home") {
+//          viewQuery = "byIncidentSorted?descending=true&limit=" + limit;
+//        }
+        //searchResults.db["view"] = [viewQuery];
         searchResults.fetch({fetch: 'query',
           options: {
             query: {
@@ -253,7 +252,8 @@ $(function(){
                     emit([doc.lastModified], doc);
                   }
                 }
-              }
+              },
+              descending:true
             }
           },
               success: function(collection, response, options) {
@@ -312,13 +312,14 @@ $(function(){
                 }}
           );
         } else if (department !== "") {
-          console.log("byDepartment search");
+          console.log("Department search");
+
           searchResults.fetch(
               {fetch: 'query',
                 options: {
                   query: {
-                    fun:byDepartment,
-                    key:department
+                    fun:byDepartment(department),
+                    descending:true
                   }
                 },
                 success: function(collection, response, options) {
@@ -329,6 +330,7 @@ $(function(){
                       {model: page, el: $("#homePageView"), startkey_docid:this.startkey_docid, startkey:this.startkey});
                 }}
           );
+
         } else {
           //console.log("This should reset the collection.");
 //          searchResults.db["keys"] = null;
@@ -336,6 +338,7 @@ $(function(){
         }
       },
       incident: function () {
+        console.log("incident route.");
         $("#homePageView").remove();
         $("#recordView").remove();
         $("#formRenderingView").remove();
@@ -343,10 +346,6 @@ $(function(){
           var viewDiv = document.createElement("div");
           viewDiv.setAttribute("id", "formRenderingView");
           $("#views").append(viewDiv);
-        }
-        if (FORMY.SyncpointLocalDb != null) {
-          console.log("FORMY.SyncpointLocalDb: " + FORMY.SyncpointLocalDb);
-          Backbone.couch_connector.config.db_name = FORMY.SyncpointLocalDb;
         }
         FORMY.loadForm("incident", null, {
           success: function(form, resp){
@@ -357,31 +356,6 @@ $(function(){
               //$("#" + identifier).datepicker({
               //$("#dateReported").datepicker({
               loadCascadedSelects();
-              $('.datep').each(function () {
-                //console.log("init dateppicker");
-//        				        var currentYear = (new Date).getFullYear();
-//        				        var minDate = getDateYymmdd($(this).data("val-rangedate-min"));
-//        				        var maxDate = getDateYymmdd($(this).data("val-rangedate-max"));
-                $(this).datepicker({
-                  dateFormat: "mm/dd/yy",  // hard-coding uk date format, but could embed this as an attribute server-side (based on the current culture)
-                  //minDate: minDate,
-                  //maxDate: maxDate,
-                  changeYear: true,
-                  //yearRange: '1900:' + currentYear,
-                  autoSize: true,
-                  // appendText: ' (mm/dd/yyyy)',
-                  buttonImage: 'images/calendar.gif',
-                  buttonImageOnly: true,
-                  constrainInput: true,
-                  showOn: 'both',
-                  //showButtonPanel: true,
-                  buttonText: 'Choose',
-                  //navigationAsDateFormat: true,
-                  //currentText: '\'Today\'',
-                  gotoCurrent: true
-                  //onClose: function (dateText, inst) { alert(dateText); }
-                });
-              });
             });
           },
           error: function() {
@@ -429,68 +403,13 @@ $(function(){
         //Set the _id and then call fetch to use the backbone connector to retrieve it from couch
         FORMY.sessionRecord = new Incident();
         FORMY.sessionRecord.id = "incident/" + incidentId;
-        //FORMY.sessionRecord = new Incident();
-
-//        searchResults.fetch(
-//            {fetch: 'query',
-//              options: {
-//                query: {
-//                  fun:bySearchKeywords,
-//                  key:searchTerm
-//                }
-//              },
-//              success: function(collection, response, options) {
-//                console.log("item count: " + collection.length);
-//                FORMY.Incidents = searchResults;
-//                var page = new Page({content: "Default List of Incidents:", startkey_docid:this.startkey_docid, startkey:this.startkey, username:hoodie.account.username});
-//                var Home = new HomeView(
-//                    {model: page, el: $("#homePageView"), startkey_docid:this.startkey_docid, startkey:this.startkey});
-//              }}
-//        );
-
-
-
         FORMY.sessionRecord.fetch( {
-          //fetch: 'query',
-//
-//          options: {
-////            query: {
-////              fun:{
-////                map: function(doc) {
-////                  if (doc.type === 'incident') {
-////                    console.log("incident: " + JSON.stringify(doc));
-////                    emit(doc.position, doc)
-////                  }
-////                }
-////              },
-////              key:"incident/" + incidentId
-////            },
-////            get: {
-////              docid:"incident/" + incidentId
-////            }
-//            get: "incident/" + incidentId,
-//            key:"incident/" + incidentId
-//          },
-//
-          //success: function(model){
           success: function(model, response, options) {
             console.log("Just successfully fetched the incident.");
-//            FORMY.sessionRecord.records = new IncidentRecordList();
-//            FORMY.sessionRecord.records.db["keys"] = [incidentId];
-            //FORMY.sessionRecord.records.fetch({
-            //success : function(){
-            //console.log("Records:" + JSON.stringify(patient.Records));
-            //console.log("Fetching Records for :" + incidentId);
-            //(new IncidentView({model: FORMY.sessionRecord})).render();
-            //(new RecordView({model: record, currentForm:form, el: $("#recordView")})).render();
             console.log("record: " + JSON.stringify(FORMY.sessionRecord));
             FORMY.loadForm(FORMY.sessionRecord.get("formId"), incidentId, {
-              //success: function(form){
               success: function(form, response, options) {
                 //console.log("form: " + JSON.stringify(form));
-//                    			form.set({"patientSurname": patient.get('surname')});
-//                    			form.set({"patientForenames": patient.get('forenames')});
-//                    			form.set({"patientMiddle_name": patient.get('Middle_name')});
                 form.set({"assignedId": FORMY.sessionRecord.get('assignedId')});
                 form.set({"created": FORMY.sessionRecord.get('created')});
                 form.set({"lastModified": FORMY.sessionRecord.get('lastModified')});
@@ -521,48 +440,27 @@ $(function(){
           viewDiv.setAttribute("id", "formRenderingView");
           $("#views").append(viewDiv);
         }
-        var record = new Record({_id: recordId});
+        var record = new Record({_id: "incident/"+ recordId, id: "incident/"+ recordId});
         record.fetch( {
           success: function(model){
-            var parentId = record.get("parentId");
-            if (parentId != null) {
-              var parent = new Incident({_id: record.get("parentId")});
-              console.log("just made a new instance of a patient.");
-              parent.fetch( {
-                success: function(model){
-                  console.log("Just successfully fetched the parent.");
-                  FORMY.sessionRecord = parent;
-                  console.log("record: " + JSON.stringify(record));
-                  FORMY.loadForm(record.get("formId"), null,{
-                    success: function(form){
-                      form.set({"patientSurname": patient.get('surname')});
-                      form.set({"patientForenames": patient.get('forenames')});
-                      form.set({"patientMiddle_name": patient.get('Middle_name')});
-                      form.set({"parentId": parent.get('_id')});
-                      (new FormView({model: record, currentForm:form, el: $("#formRenderingView")})).render();
-                    },
-                    error : function(){
-                      console.log("Error loading form: " + arguments);
-                    }
-                  });
-                }
-              });
-            } else {
-              FORMY.loadForm(record.get("formId"), null,{
-                success: function(form){
-                  (new FormView({model: record, currentForm:form, el: $("#formRenderingView")})).render();
-                  $(document).ready(function() {
-                    loadCascadedSelects();
-                  });
-                },
-                error : function(){
-                  console.log("Error loading form: " + arguments);
-                }
-              });
-            }
+            console.log("Fetched record: " + JSON.stringify(model));
+            FORMY.loadForm("incident", null, {
+              success: function(form, resp){
+                var newModel = new Form();
+                var newPatientFormView = new FormView({model: form, el: $("#formRenderingView")});
+                newPatientFormView.currentRecord = record;
+                newPatientFormView.render();
+                $(document).ready(function() {
+                  loadCascadedSelects();
+                });
+              },
+              error: function(err) {
+                console.log("Error loading incident: " + err);
+              }
+            });
           },
           error : function(){
-            console.log("Error loading FormView: " + arguments);
+            console.log("Error loading Record: " + arguments);
           }
         });
       },
