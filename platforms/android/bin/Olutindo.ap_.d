@@ -44,7 +44,10 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/query \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/templates \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/views \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/form_defs/actionTaken.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/form_defs/incident.js \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/models/ActionTaken.js \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/models/ActionTakenRecordList.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/models/Db.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/models/Form.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/app/models/FormCollection.js \
@@ -154,9 +157,11 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/backbone-pouch.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/backbone.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/css3-mediaqueries.js \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/fastclick.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/form2object.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/formElementRender.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/handlebars.js \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/IndexedDBShim.min.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/inflection.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/jquery-1.7.2.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/jquery-1.7.2.min.js \
