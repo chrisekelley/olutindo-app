@@ -31,6 +31,7 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/index-bak.html \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/index.html \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/indexTodos.html \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/main.html \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins \
@@ -150,6 +151,7 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/images/system-software-update.png \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/images/system-users.png \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/images/user-home.png \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/js/PushNotification.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/backbone-couchdb-1.0.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/backbone-couchdb.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/js-libraries/backbone-hoodie.js \
@@ -184,6 +186,7 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.core.file-transfer \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.core.inappbrowser \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.core.vibration \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.device \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.version \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/com.borismus.webintent/www \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/com.borismus.webintent/www/webintent.js \
@@ -219,6 +222,8 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.core.inappbrowser/www/InAppBrowser.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.core.vibration/www \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.core.vibration/www/vibration.js \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.device/www \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.device/www/device.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.version/www \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.version/www/version.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/todos/backbone.js \

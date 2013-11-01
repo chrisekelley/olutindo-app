@@ -21,7 +21,7 @@ package org.rti.olutindo_app;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
-import org.jshybugger.DebugServiceClient;
+// import org.jshybugger.DebugServiceClient;
 
 public class Olutindo extends DroidGap
 {

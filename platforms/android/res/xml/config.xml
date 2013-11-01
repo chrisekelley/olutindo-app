@@ -35,10 +35,23 @@
     <feature name="applicationPreferences">
         <param name="android-package" value="com.simonmacdonald.prefs.AppPreferences" />
     </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="PushNotificationPlugin">
+        <param name="android-package" value="com.urbanairship.phonegap.PushNotificationPlugin" />
+        <param name="onload" value="true" />
+    </feature>
     <access origin="*" />
     <preference name="useBrowserHistory" value="true" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
     <preference name="load-url-timeout" value="60000" />
+    <preference name="com.urbanairship.production_app_key" value="aPkihJ2PT8mu6vIK-469XQ" />
+    <preference name="com.urbanairship.production_app_secret" value="54M1qcLxTG2EPhZFYlGYPA" />
+    <preference name="com.urbanairship.development_app_key" value="aPkihJ2PT8mu6vIK-469XQ" />
+    <preference name="com.urbanairship.development_app_secret" value="54M1qcLxTG2EPhZFYlGYPA" />
+    <preference name="com.urbanairship.in_production" value="false" />
+    <preference name="com.urbanairship.gcm_sender" value="236344170537" />
 </widget>

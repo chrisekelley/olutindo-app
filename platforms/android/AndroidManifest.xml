@@ -24,8 +24,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <provider android:authorities="jsHybugger.org" android:exported="false" android:name="org.jshybugger.DebugContentProvider" />
-        <service android:enabled="true" android:exported="false" android:name="org.jshybugger.DebugService" />
+        <receiver android:name="com.urbanairship.phonegap.PushReceiver" />
+        <receiver android:name="com.urbanairship.CoreReceiver" />
+        <receiver android:name="com.urbanairship.push.GCMPushReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="org.rti.olutindo_app" />
+            </intent-filter>
+        </receiver>
+        <meta-data android:name="com.urbanairship.autopilot" android:value="com.urbanairship.phonegap.PushAutopilot" />
+        <service android:label="Push Notification Service" android:name="com.urbanairship.push.PushService" />
+        <service android:label="Push Notification Worker Service" android:name="com.urbanairship.push.PushWorkerService" />
+        <service android:label="Event Service" android:name="com.urbanairship.analytics.EventService" />
+        <provider android:authorities="org.rti.olutindo_app.urbanairship.provider" android:exported="false" android:multiprocess="true" android:name="com.urbanairship.UrbanAirshipProvider" />
+        <service android:label="Segments Service" android:name="com.urbanairship.location.LocationService" />
     </application>
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="17" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="org.rti.olutindo_app.permission.C2D_MESSAGE" />
+    <permission android:name="org.rti.olutindo_app.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 </manifest>
