@@ -187,6 +187,7 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.core.inappbrowser \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.core.vibration \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.device \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.sms \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.version \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/com.borismus.webintent/www \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/com.borismus.webintent/www/webintent.js \
@@ -224,6 +225,8 @@
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.core.vibration/www/vibration.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.device/www \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.device/www/device.js \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.sms/www \
+/Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.sms/www/sms.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.version/www \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/plugins/org.apache.cordova.plugin.version/www/version.js \
 /Users/chrisk/source/olutindo-app/platforms/android/assets/www/todos/backbone.js \

@@ -183,6 +183,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/org.apache.cordova.plugin.sms/www/sms.js",
+        "id": "org.apache.cordova.plugin.sms.Sms",
+        "clobbers": [
+            "window.sms"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.device/www/device.js",
         "id": "org.apache.cordova.device.device",
         "clobbers": [

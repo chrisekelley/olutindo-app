@@ -218,10 +218,12 @@ var StartReplication = function () {
   if (account.username != null) {
     var credentials = account.username + ":" + account.password;
     var couchdb =  "troubletickets_" +  account.site;
+    var subdomain =  "ug" +  account.site;
     //var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/" + couchdb + "/";
     //var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/" + couchdb + "/";
     //var remoteCouch = "http://" + credentials + "@192.168.2.1:5984/" + couchdb + "/";
-    var remoteCouch = "http://" + credentials + "@192.168.1.60:5984/" + couchdb + "/";
+    //var remoteCouch = "http://" + credentials + "@192.168.1.60:5984/" + couchdb + "/";
+    var remoteCouch = "http://" + credentials + "@" + subdomain + ".cloudant.com/troubletickets/";
     console.log("start replication with " + remoteCouch)
     FORMY.ReplicationStarted = true;
     //var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};

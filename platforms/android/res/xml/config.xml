@@ -42,6 +42,9 @@
         <param name="android-package" value="com.urbanairship.phonegap.PushNotificationPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="Sms">
+        <param name="android-package" value="org.apache.cordova.plugin.sms.Sms" />
+    </feature>
     <access origin="*" />
     <preference name="useBrowserHistory" value="true" />
     <preference name="exit-on-suspend" value="false" />

@@ -58,6 +58,7 @@
 /Users/chrisk/source/olutindo-app/platforms/android/bin/classes/org/apache/cordova/inappbrowser/InAppBrowser$InAppBrowserClient.class \
 /Users/chrisk/source/olutindo-app/platforms/android/bin/classes/org/apache/cordova/inappbrowser/InAppBrowser$InAppChromeClient.class \
 /Users/chrisk/source/olutindo-app/platforms/android/bin/classes/org/apache/cordova/inappbrowser/InAppBrowser.class \
+/Users/chrisk/source/olutindo-app/platforms/android/bin/classes/org/apache/cordova/plugin/sms/Sms.class \
 /Users/chrisk/source/olutindo-app/platforms/android/bin/classes/org/apache/cordova/plugin/version/Version.class \
 /Users/chrisk/source/olutindo-app/platforms/android/bin/classes/org/apache/cordova/vibration/Vibration.class \
 /Users/chrisk/source/olutindo-app/platforms/android/bin/classes/org/rti/olutindo_app/BuildConfig.class \
