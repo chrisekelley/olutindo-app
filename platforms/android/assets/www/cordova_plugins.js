@@ -169,13 +169,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/com.borismus.webintent/www/webintent.js",
-        "id": "com.borismus.webintent.WebIntent",
-        "clobbers": [
-            "WebIntent"
-        ]
-    },
-    {
         "file": "plugins/com.simonmacdonald.prefs/src/android/applicationPreferences.js",
         "id": "com.simonmacdonald.prefs.applicationPreferences",
         "clobbers": [
@@ -187,6 +180,20 @@ module.exports = [
         "id": "org.apache.cordova.plugin.sms.Sms",
         "clobbers": [
             "window.sms"
+        ]
+    },
+    {
+        "file": "plugins/com.borismus.webintent/www/webintent.js",
+        "id": "com.borismus.webintent.WebIntent",
+        "clobbers": [
+            "WebIntent"
+        ]
+    },
+    {
+        "file": "plugins/com.polychrom.cordova.actionbar/www/actionbar.js",
+        "id": "com.polychrom.cordova.actionbar.ActionBarSherlock",
+        "clobbers": [
+            "ActionBarSherlock"
         ]
     },
     {

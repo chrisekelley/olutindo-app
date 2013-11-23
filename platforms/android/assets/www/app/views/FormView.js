@@ -216,9 +216,9 @@ var FormView = Backbone.View.extend({
 		  console.log("formData: " + JSON.stringify(formData));
 		  var _id = formData._id;
 		  if (_id == null) {
-//			  var unixTimestamp = Math.round(+new Date()/1000);
-//			  formData.created =  unixTimestamp;
-        formData.created = new Date();
+			  var unixTimestamp = Math.round(+new Date()/1000);
+			  formData.created =  unixTimestamp;
+        //formData.created = new Date();
 			  //console.log("formData.created: " + formData.created);
 			  formData.lastModified =  formData.created;
 			  if (formId === "incident") {
@@ -264,10 +264,23 @@ var FormView = Backbone.View.extend({
           var actionTaken = new ActionTaken(formData);
           actionTaken.type="actionTaken";
           actionTaken.save();
+          // open the parent incident record
           var record = new Record(this.parentRecord.attributes);
-          console.log("Updating the record using backbone save");
-          record.set({lastModified:new Date()});
+          if (typeof actionTaken.get("resolved") != 'undefined') {
+            if (typeof window.sms != 'undefined') {
+              var number = record.get("phone")
+              var message = actionTaken.get("comment");
+              var intent = "INTENT"; //leave empty for sending sms using default intent, "INTENT" to copy to SMS app.
+              var success = function () { console.log("SMS Message sent successfully") };
+              var error = function (e) { alert('Message Failed:' + e);console.log("Error sending message: " + e); };
+              sms.send(number, message, intent, success, error);
+            }
+            record.set({dateResolved:unixTimestamp});
+          }
+          record.set({lastModified:unixTimestamp});
           record.save();
+          console.log("Updating the record using backbone save");
+
           inspectModelAndGo(actionTaken);
         } else {
 				  console.log("Saving the record using FORMY.sessionRecord.records.create");
@@ -283,12 +296,18 @@ var FormView = Backbone.View.extend({
 				  //model.clear;
 			  }
 		  } else {
-			  //var unixTimestamp = Math.round(+new Date()/1000);
-			  formData.lastModified = new Date();
+			  var unixTimestamp = Math.round(+new Date()/1000);
+			  formData.lastModified = unixTimestamp;
 			  console.log("Updating the record using record.save");
-			  var record = new Record(formData);
-			  record.collection = "patient-records";
-			  record.urlRoot = "patient-records";
+        var record = new Record(formData);
+        if (formId === "actionTaken") {
+          if (typeof record.get("resolved") != 'undefined') {
+            // open the parent incident record
+            var incident = new Record(this.parentRecord.attributes);
+            incident.set({dateResolved:unixTimestamp});
+            incident.save();
+          }
+        }
 //			  if (formData.assignedId != null) {
 //				  var assignedId = parseInt(formData.assignedId);
 //				  console.log("formData.assignedId: " + formData.assignedId + " assignedId: " + assignedId);

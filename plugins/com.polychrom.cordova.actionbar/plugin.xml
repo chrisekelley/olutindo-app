@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="com.polychrom.cordova.actionbar"
+      version="0.1.0">
+    <name>ActionBarSherlock</name>
+    <description>Cordova ActionBarSherlock Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,ActionBar,ActionBarSherlock</keywords>
+    <repo>https://github.com/chrisekelley/cordova-android-actionbar.git</repo>
+    <issue>https://github.com/polychrom/cordova-android-actionbar/issues</issue>
+
+
+    <js-module src="www/actionbar.js" name="ActionBarSherlock">
+        <clobbers target="ActionBarSherlock" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="ActionBarSherlock">
+            <param name="android-package" value="com.polychrom.cordova.actionbar.ActionBarSherlock"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/ActionBarSherlock.java" target-dir="src/com/polychrom/cordova/actionbar" />
+    </platform>
+
+</plugin>
+

@@ -1,13 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.helloCordova" version="2.0.0" xmlns="http://www.w3.org/ns/widgets">
+<widget id="org.rti.olutindo_app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Hello Cordova</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
-    </author>
-    <content src="index.html" />
     <feature name="App">
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
@@ -57,4 +53,11 @@
     <preference name="com.urbanairship.development_app_secret" value="54M1qcLxTG2EPhZFYlGYPA" />
     <preference name="com.urbanairship.in_production" value="false" />
     <preference name="com.urbanairship.gcm_sender" value="236344170537" />
+    <feature name="ActionBarSherlock">
+        <param name="android-package" value="com.polychrom.cordova.actionbar.ActionBarSherlock" />
+    </feature>
+    <author email="chris@vetula.com" href="http://vetula.com">
+        Chris Kelley
+    </author>
+    <content src="index.html" />
 </widget>

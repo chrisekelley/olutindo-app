@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Action Bar - Basic Example</title>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+        
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script src="cordova-2.3.0.js"></script>
+        <script src="actionbar.js"></script>
+        <script>
+        	function onDeviceReady()
+        	{
+				var ActionBar = window.plugins.actionbar;
+				
+				// Show Logo / Title
+				ActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_USE_LOGO);
+				ActionBar.setHomeButtonEnabled(true);
+				
+				// Set navigation mode (NAVIGATION_MODE_STANDARD is the default)
+				ActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+				ActionBar.setHomeCallback(function() { alert('Go up / home'); });
+				
+				// Set menu items
+				ActionBar.setMenu([
+				    { icon: 'img/new.png', text: 'New File', show: ActionBar.SHOW_AS_ACTION_ALWAYS | ActionBar.SHOW_AS_ACTION_WITH_TEXT, click: function() { alert('Create new file'); } },
+				    { icon: 'img/save.png', text: 'Save',
+				      header: { icon: 'img/save.png', text: 'Save as...' },
+				      items: [
+				        { text: 'PNG', click: function() { alert('Save PNG'); } },
+				        { text: 'JPEG', click: function() { alert('Save JPEG'); } }
+				      ]
+				    },
+				    { icon: 'img/search.png', text: 'Search' }
+				]);
+        	}
+        </script>
+    </head>
+    <body onload="document.addEventListener('deviceready', onDeviceReady, false);">
+        <div>
+            <h1>ActionBar Example</h1>
+        </div>
+    </body>
+</html>

@@ -43,31 +43,6 @@ function loadCascadedSelects(){
 
 //window.onload = loadCascadedSelects;
 
-function findSyncpointLocalDb() {
-	var id = null;
-	var local_db_name = null;
-	
-	$.getJSON('/sp_admin/_design/control/_view/by_type?key=%22installation%22', function(data) { 
-		var record = null;
-		$.each(data, function(key, val) {
-			if (key == "rows") {
-				record = val;
-				id = record[0].id;
-			}
-		});
-		if (record != null) {
-			//console.log("record: " + JSON.stringify(record));
-			console.log("id: " + id);
-			$.getJSON('/sp_admin/' + id, function(data) {
-				//console.log("data: " + JSON.stringify(data));
-				local_db_name = data.local_db_name;
-				FORMY.SyncpointLocalDb = local_db_name;
-				console.log("local_db_name: " + FORMY.SyncpointLocalDb);
-			});
-		}
-	});
-}
-
 function checkVersion() {
   console.log("Checking for new version of app.");
   $.ajax({ type: "GET", url: "https://dl.dropboxusercontent.com/s/nxvrvdtpvmqomxd/version.xml?token_hash=AAHFO2PaE2L6pTZQoDYYU1PVAKS6qMK6__PZgU3LYzUgGg&dl=1", dataType: "xml",
@@ -173,8 +148,13 @@ function saveLoginPreferences(username, password, site, department) {
       console.log("Error! " + JSON.stringify(error));
     });
     console.log("Successfully saved login preferences.");
-    StartReplication();
-    UrbanAirshipRegistration();
+    var account = new Object();
+    account.username = username;
+    account.password = password;
+    account.site = site;
+    account.department = department;
+    StartReplication(account);
+    UrbanAirshipRegistration(account);
   } else {
     console.log("Login prefs *not* saved. They currently saved only on smartphone version.")
   }
@@ -182,110 +162,120 @@ function saveLoginPreferences(username, password, site, department) {
 
 function getLoginPreferences() {
   var account = new Object();
-  if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
-    window.applicationPreferences.get("username", function(value) {
-      account.username = value;
-    }, function(error) {
-      alert("Welcome to Olutindo! Please sign in so that the app can receive records from the server.");
-      console.log("The username is not stored in preferences; displayed sign in notice. Error Message: " + JSON.stringify(error));
-      //$form = $.modalForm({fields: [ 'username', 'password', 'site', 'department' ], submit: 'Sign in'})
-      FORMY.router.navigate('config', true);
-    });
-    window.applicationPreferences.get("password", function(value) {
-      account.password = value;
-    }, function(error) {
-      //alert("Error! " + JSON.stringify(error));
-      //console.log("Error! " + JSON.stringify(error));
-    });
-    window.applicationPreferences.get("site", function(value) {
-      account.site = value;
-    }, function(error) {
-      //alert("Error! " + JSON.stringify(error));
-      //console.log("Error! " + JSON.stringify(error));
-    });
-  } else {
+//  if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+//    window.applicationPreferences.get("username", function(value) {
+//      account.username = value;
+//    }, function(error) {
+//      alert("Welcome to Olutindo! Please login so that the app can receive records from the server.");
+//      console.log("The username is not stored in preferences; displayed sign in notice. Error Message: " + JSON.stringify(error));
+//      //$form = $.modalForm({fields: [ 'username', 'password', 'site', 'department' ], submit: 'Sign in'})
+//      //FORMY.router.navigate('config', {trigger: true});
+//      return null;
+//    });
+//    window.applicationPreferences.get("password", function(value) {
+//      account.password = value;
+//    }, function(error) {
+//      //alert("Error! " + JSON.stringify(error));
+//      //console.log("Error! " + JSON.stringify(error));
+//    });
+//    window.applicationPreferences.get("site", function(value) {
+//      account.site = value;
+//    }, function(error) {
+//      //alert("Error! " + JSON.stringify(error));
+//      //console.log("Error! " + JSON.stringify(error));
+//    });
+//  } else {
     account.username = "testuser";
     account.password = "testuserPassword";
     account.site = "aru";
     //alert("Welcome to Olutindo! Please sign in so that the app can receive records from the server.");
     //FORMY.router.navigate('config', true);
-  }
+  //}
   return account;
 }
 
-var StartReplication = function () {
-  var account = getLoginPreferences();
-  if (account.username != null) {
+var StartReplication = function (account) {
+  if (account != null && account.username != null) {
     var credentials = account.username + ":" + account.password;
     var couchdb =  "troubletickets_" +  account.site;
     var subdomain =  "ug" +  account.site;
-    //var remoteCouch = "https://" + credentials + "@olutindo.iriscouch.com/" + couchdb + "/";
-    //var remoteCouch = "http://" + credentials + "@127.0.0.1:5984/" + couchdb + "/";
-    //var remoteCouch = "http://" + credentials + "@192.168.2.1:5984/" + couchdb + "/";
-    //var remoteCouch = "http://" + credentials + "@192.168.1.60:5984/" + couchdb + "/";
-    var remoteCouch = "http://" + credentials + "@" + subdomain + ".cloudant.com/troubletickets/";
+
+    var remoteCouch = "http://" + credentials + "@192.168.1.60:5984/" + couchdb + "/";
+    // CORS reverse proxy for Cloudant
+//    var remoteCouch = "http://localhost:3000/troubletickets/" + subdomain + "/" + credentials;
+//    if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)) {
+//      remoteCouch = "https://" + credentials + "@" + subdomain + ".cloudant.com/troubletickets/";
+//    }
+
     console.log("start replication with " + remoteCouch)
     FORMY.ReplicationStarted = true;
     //var opts = {continuous: true, withCredentials:true, cookieAuth: {username:account.username, password:account.password}, auth: {username:account.username, password:account.password}};
     var opts = {continuous: true,
       withCredentials:true,
-      cookieAuth: {username:account.username, password:account.password},
+      //cookieAuth: {username:account.username, password:account.password},
       auth: {username:account.username, password:account.password},
       complete: onComplete,
       timeout: 60000};
     //var opts = {continuous: true, withCredentials:true};
     //var opts = {continuous: true};
+    //$("#alertMessage").html('<img src="../images/network_drive_connected_40.png"/>');
+    FORMY.SyncStatus.html = '<img src="images/network_drive_connected_40.png"/>';
     Backbone.sync.defaults.db.replicate.to(remoteCouch, opts, ReplicationErrorLog);
     //localDB.replicate.from('http://relax.com/on-the-couch', {withCredentials:true, cookieAuth: {username:'admin', password:'pass'}}, function(){});
     Backbone.sync.defaults.db.replicate.from(remoteCouch, opts, ReplicationErrorLog);
   }
 }
 
-var UrbanAirshipRegistration = function () {
-
-  push = window.plugins.pushNotification;
-
-// Callback for when a device has registered with Urban Airship.
-  push.registerEvent('registration', function (error, id) {
-    if (error) {
-      console.log('There was an error registering for push notifications');
-    } else {
-      console.log("Registered with ID: " + id);
-    }
-  });
-  // Callback for when the app is running, and receives a push.
-  push.registerEvent('push', function (push) {
-    console.log("Got push: " + push.message)
-  });
-
-  var account = getLoginPreferences();
-  if (account.username != null) {
-    // Set an alias, this lets you tie a device to a user in your system
-    push.setAlias(account.username, function () {
-      push.getAlias(function (alias) {
-        console.log("The user formerly known as " + alias)
-      });
-    });
-  }
-  // Check if push is enabled
-  push.isPushEnabled(function (enabled) {
-    if (enabled) {
-      console.log("Push is enabled! Fire away!");
-    }
-  })
-
-}
-
 var ReplicationErrorLog = function(err, result) {
   if (result !=null && result.ok) {
     console.log("Replication is fine. ")
+    //$("#alertMessage").html('<img src="../images/network_drive_connected_40.png"/>');
+    FORMY.SyncStatus.html = '<img src="images/network_drive_connected_40.png"/>';
   } else {
     console.log("Replication error: " + JSON.stringify(err));
+    //$("#alertMessage").html('<img src="../images/network_drive_offline_40.png"/>');
+    FORMY.SyncStatus.html = '<img src="images/network_drive_offline_40.png"/>';
     if ((typeof err != 'undefined') && (err.status === 401)) {
       alert("Error: Name or password is incorrect. Unable to connect to the server.");
     }
   }
 }
+
+var UrbanAirshipRegistration = function (account) {
+
+  if (typeof window.plugins != 'undefined') {
+    push = window.plugins.pushNotification;
+
+    // Callback for when a device has registered with Urban Airship.
+    push.registerEvent('registration', function (error, id) {
+      if (error) {
+        console.log('There was an error registering for push notifications');
+      } else {
+        console.log("Registered with ID: " + id);
+      }
+    });
+    // Callback for when the app is running, and receives a push.
+    push.registerEvent('push', function (push) {
+      console.log("Got push: " + push.message)
+    });
+
+    if (account != null && account.username != null) {
+      // Set an alias, this lets you tie a device to a user in your system
+      push.setAlias(account.username, function () {
+        push.getAlias(function (alias) {
+          console.log("The user formerly known as " + alias)
+        });
+      });
+    }
+    // Check if push is enabled
+    push.isPushEnabled(function (enabled) {
+      if (enabled) {
+        console.log("Push is enabled! Fire away!");
+      }
+    })
+  }
+}
+
 
 
 var onComplete = function(err, result) {
@@ -304,8 +294,6 @@ var signIn = function() {
 }
 
 var handleSignInSubmit = function() {
-  console.log("Is this thing working?")
-
   saveLoginPreferences($("#username").val(), $("#password").val(), $("#site-dropwdown").val(), $("#department-dropwdown").val());
   $("#SigninForm").hide();
 //  return function(event, inputs) {
@@ -350,7 +338,3 @@ var uuidGenerator = function(len) {
     return _results;
   })()).join('');
 };
-
-
-
-

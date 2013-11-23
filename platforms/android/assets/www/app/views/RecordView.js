@@ -39,9 +39,6 @@ var RecordView = Backbone.View.extend({
 		//thisHtml = this.template(this.model.toJSON());
 		thisHtml = this.template(this.form.toJSON());
 		$(this.el).html(thisHtml);
-		//$("#recordView").html(thisHtml);
-		//$(this.el).html(this.template(this.form.toJSON()));
-		//this.formElements = new FormElements(this.form.get("form_elements"), { view: this });
 		this.formElements.each(this.addOne);
     if (FORMY.sessionRecord.actionTakens.length > 0) {
       actionTakens = FORMY.sessionRecord.actionTakens
@@ -88,7 +85,7 @@ var RecordView = Backbone.View.extend({
     }
     //console.log("currentRow: " + this.currentRow + " identifier: " + identifier);
     if (this.value != null) {
-      //console.log("value for " + identifier + ": " + this.value);
+      console.log("value for " + identifier + ": " + this.value);
       formElement.set({"value": this.value});
     }
     if (this.orientation === "vert") {
@@ -155,6 +152,10 @@ var RecordView = Backbone.View.extend({
       closeRow = "false";
       $(this.$("#formElements")).append((new RecordElementView({model: formElement})).render().el);
       //console.log("Hidden Element: " + identifier + " currentParentName: " + currentParentName);
+    } else if (inputType == 'alertCheckbox') {
+      if (typeof this.value !== 'undefined') {
+        currentParent.append((new RecordElementView({model: formElement})).render().el);
+      }
     } else {
       currentParent.append((new RecordElementView({model: formElement})).render().el);
     }

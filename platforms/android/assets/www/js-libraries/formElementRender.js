@@ -100,6 +100,8 @@ Handlebars.registerHelper("renderWidget", function(context) {
 		template = displayInfotextWidgetCompiledHtml;
 	} else if (inputType == 'hidden') {
 		template = hiddenWidgetCompiledHtml;
+  } else if (inputType == 'hiddenButDisplay') {
+		template = hiddenWidgetCompiledHtml;
 	} else if (inputType == 'button') {
 		template = buttonWidgetCompiledHtml;
 	} else {
@@ -172,7 +174,7 @@ Handlebars.registerHelper('dropdownWidgetValue', function(enumerations, value) {
 function sortBylabelAlpha(a,b) {
 	return a.label.toLowerCase() > b.label.toLowerCase();
 }
-Handlebars.registerHelper('renderPriority', function(priority, resolved) {
+Handlebars.registerHelper('renderPriority', function(priority, dateResolved) {
 	var out = "";
 	switch (priority){
     case "1":
@@ -185,7 +187,7 @@ Handlebars.registerHelper('renderPriority', function(priority, resolved) {
     	out = '<img src="images/alert-high.png" title="High Priority">';
     	break;
 	}
-	if (resolved != null && resolved == "1") {
+	if (dateResolved != null) {
 		out = '<img src="images/resolved.png" title="Resolved">';
 	}
 	return out;
@@ -221,7 +223,7 @@ Handlebars.registerHelper('renderVillage', function(value) {
 
 Handlebars.registerHelper('dateFormat', function(item) {
 	var out = "";
-	var d1 = new Date(item);
+	var d1 = new Date(item * 1000);
 	//out = d1.toString('yyyy-MM-dd hh:mm');
 	//out = $.format.date(d1, "yyyy-MM-dd hh:mm:ss");
 	out = $.format.date(d1, "dd-MM hh:mm");
@@ -229,17 +231,18 @@ Handlebars.registerHelper('dateFormat', function(item) {
 });
 Handlebars.registerHelper('dateFormatDate', function(item) {
 	var out = "";
-	var d1 = new Date(item);
+	var d1 = new Date(item * 1000);
 	out = $.format.date(d1, "dd/MM");
 	//console.log("item: " + item + " d1: " + d1 + " out: " + out);
 	return out;
 });
 Handlebars.registerHelper('dateFormatdMY', function(item) {
 	var out = "";
-	var d1 = new Date(item);
+	var d1 = new Date(item * 1000);
 	//out = d1.toString('yyyy-MM-dd hh:mm');
 	//out = $.format.date(d1, "yyyy-MM-dd hh:mm:ss");
-	out = $.format.date(d1, "dd/MM/yyyy");
+	out = $.format.date(d1, "dd/MM/yyyy hh:mm:ss");
+  //out = d1.toLocaleDateString();
 	return out;
 });
 Handlebars.registerHelper('substring', function(identifier, from) {

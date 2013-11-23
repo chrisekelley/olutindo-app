@@ -3,7 +3,7 @@ package com.borismus.webintent;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.cordova.DroidGap;
+import org.apache.cordova.CordovaActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,23 +46,28 @@ public class WebIntent extends CordovaPlugin {
                 }
 
                 // Parse the arguments
-                JSONObject obj = args.getJSONObject(0);
-                String type = obj.has("type") ? obj.getString("type") : null;
-                Uri uri = obj.has("url") ? Uri.parse(obj.getString("url")) : null;
-                JSONObject extras = obj.has("extras") ? obj.getJSONObject("extras") : null;
-                Map<String, String> extrasMap = new HashMap<String, String>();
+				JSONObject obj = args.getJSONObject(0);
+				if (obj.has("package")) {
+					String pkg = obj.getString("package");
+					Intent LaunchIntent = cordova.getActivity().getPackageManager().getLaunchIntentForPackage(pkg);
+					((CordovaActivity)this.cordova.getActivity()).startActivity(LaunchIntent);
+				} else {
+					String type = obj.has("type") ? obj.getString("type") : null;
+					Uri uri = obj.has("url") ? Uri.parse(obj.getString("url")) : null;
+					JSONObject extras = obj.has("extras") ? obj.getJSONObject("extras") : null;
+					Map<String, String> extrasMap = new HashMap<String, String>();
 
-                // Populate the extras if any exist
-                if (extras != null) {
-                    JSONArray extraNames = extras.names();
-                    for (int i = 0; i < extraNames.length(); i++) {
-                        String key = extraNames.getString(i);
-                        String value = extras.getString(key);
-                        extrasMap.put(key, value);
-                    }
-                }
-
-                startActivity(obj.getString("action"), uri, type, extrasMap);
+					// Populate the extras if any exist
+					if (extras != null) {
+						JSONArray extraNames = extras.names();
+						for (int i = 0; i < extraNames.length(); i++) {
+							String key = extraNames.getString(i);
+							String value = extras.getString(key);
+							extrasMap.put(key, value);
+						}
+					}
+					startActivity(obj.getString("action"), uri, type, extrasMap);
+				}
                 //return new PluginResult(PluginResult.Status.OK);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
                 return true;
@@ -73,7 +78,7 @@ public class WebIntent extends CordovaPlugin {
                     callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
                     return false;
                 }
-                Intent i = ((DroidGap)this.cordova.getActivity()).getIntent();
+                Intent i = ((CordovaActivity)this.cordova.getActivity()).getIntent();
                 String extraName = args.getString(0);
                 //return new PluginResult(PluginResult.Status.OK, i.hasExtra(extraName));
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, i.hasExtra(extraName)));
@@ -85,7 +90,7 @@ public class WebIntent extends CordovaPlugin {
                     callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
                     return false;
                 }
-                Intent i = ((DroidGap)this.cordova.getActivity()).getIntent();
+                Intent i = ((CordovaActivity)this.cordova.getActivity()).getIntent();
                 String extraName = args.getString(0);
                 if (i.hasExtra(extraName)) {
                     //return new PluginResult(PluginResult.Status.OK, i.getStringExtra(extraName));
@@ -103,7 +108,7 @@ public class WebIntent extends CordovaPlugin {
                     return false;
                 }
 
-                Intent i = ((DroidGap)this.cordova.getActivity()).getIntent();
+                Intent i = ((CordovaActivity)this.cordova.getActivity()).getIntent();
                 String uri = i.getDataString();
                 //return new PluginResult(PluginResult.Status.OK, uri);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, uri));
@@ -195,7 +200,7 @@ public class WebIntent extends CordovaPlugin {
                 i.putExtra(key, value);
             }
         }
-        ((DroidGap)this.cordova.getActivity()).startActivity(i);
+        ((CordovaActivity)this.cordova.getActivity()).startActivity(i);
     }
 
     void sendBroadcast(String action, Map<String, String> extras) {
@@ -206,6 +211,6 @@ public class WebIntent extends CordovaPlugin {
             intent.putExtra(key, value);
         }
 
-        ((DroidGap)this.cordova.getActivity()).sendBroadcast(intent);
+        ((CordovaActivity)this.cordova.getActivity()).sendBroadcast(intent);
     }
 }

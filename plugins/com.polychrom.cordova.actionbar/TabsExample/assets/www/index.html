@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ACtionBar - Tabs Example</title>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+        
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script src="cordova-2.3.0.js"></script>
+        <script src="actionbar.js"></script>
+        <script>
+        	function onDeviceReady()
+        	{
+				var ActionBar = window.plugins.actionbar;
+				
+				// Show Logo / Title
+				ActionBar.setDisplayOptions(0); // Hide bar, just show the tabs (note: this is purely for looks, you can have both displayed at same time)
+				ActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+				
+				// Setup tabs
+				ActionBar.setTabs([
+				    { icon: 'img/inbox.png', text: 'Inbox',
+				        select: function() { document.body.innerHTML = "<ol><li>Hey there!</li><li>Re: Hey there!</li><li>GREAT NEW OFFER!</li></ol>" },
+				        reselect: function() { /* refresh here */ },
+				        unselect: function() { /* unload here */ }
+				    },
+				    { icon: 'icons/settings.png', text: 'Outbox',
+				        select: function() { document.body.innerHTML = "<ol><li>Re: Hey there!</li><li>Re: GREAT NEW OFFER!</li></ol>" },
+				        reselect: function() { /* refresh here */ },
+				        unselect: function() { /* unload here */ }
+				    }
+				]);
+        	}
+        </script>
+    </head>
+    <body onload="document.addEventListener('deviceready', onDeviceReady, false);">
+    </body>
+</html>

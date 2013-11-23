@@ -16,3 +16,7 @@ Install grunt:
     npm install -g grunt-cli
 
 Run build.sh. That script executes grunt cordova-build, uninstalls the app, and then installs it.
+
+Kudos to [jcreations](https://github.com/jcreations) for his ActionBarSherlock implementation for the
+[cordova-android-actionbar](https://github.com/jcreations/cordova-android-actionbar/tree/actionbar-sherlock) plugin,
+which I adapted for Cordova 3.x and added support for SearchViews.
